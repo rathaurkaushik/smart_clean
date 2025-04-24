@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "62760420733",
+    "firebase_url": "https://smart-clean-admin-default-rtdb.firebaseio.com",
+    "project_id": "smart-clean-admin",
+    "storage_bucket": "smart-clean-admin.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62760420733:android:c2423726a5bbf601947814",
+        "android_client_info": {
+          "package_name": "com.example.smart_clean"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG3yC21y_vkcfmu8rbUUpajrE79UU60eI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62760420733:android:f8386a42c60c51d2947814",
+        "android_client_info": {
+          "package_name": "com.example.smart_clean_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG3yC21y_vkcfmu8rbUUpajrE79UU60eI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
