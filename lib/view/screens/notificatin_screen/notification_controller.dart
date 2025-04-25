@@ -6,11 +6,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smart_clean/model/activities_model.dart';
-import 'package:smart_clean/services/notification_services.dart';
 import 'package:smart_clean/view/screens/home/raise_request.dart';
 import 'package:smart_clean/view/screens/utils/toast_maasage.dart';
 
-class HomeController extends GetxController {
+class NotificationController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -18,28 +17,16 @@ class HomeController extends GetxController {
   late CollectionReference activityRef;
   final List<ActivitiesModel> activityList = [];
 
-  /// notification Services
-  ///
-  NotificationServices notificationServices = NotificationServices();
-
-
-
   /// Stores user-selected address from LocationScreen
   String? selectedLocation;
   var isLoading = false.obs;
   @override
   void onInit() {
-
-    notificationServices.requestNotificationPermission();
-    notificationServices.getToken().then((value){
-      print("Device token value: ${value}");
-    });
-    notificationServices.firebaseInit();
+    super.onInit();
     activityRef = firestore.collection('requests');
     getActivities();
     super.onInit();
   }
-
 
   /// Opens the camera and navigates to the RaiseRequest screen with captured image
   void openCamera() async {
@@ -47,7 +34,7 @@ class HomeController extends GetxController {
     if (image != null) {
       final File imageFile = File(image.path);
       Get.to(
-        () => RaiseRequest(imagePath: imageFile),
+            () => RaiseRequest(imagePath: imageFile),
       ); // ✅ pass File, not String
       print('📸 Image path: ${image.path}');
     } else {
@@ -68,7 +55,7 @@ class HomeController extends GetxController {
   Future<Map<String, String>> getUserInfo() async {
     final uid = _auth.currentUser!.uid;
     final userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
     if (userDoc.exists) {
       final name = userDoc['name'];
@@ -135,8 +122,8 @@ class HomeController extends GetxController {
       print(("activity find: ${activitySnapshot.docs.length}"));
 
       final List<ActivitiesModel> retrivedActivity =
-          activitySnapshot.docs.map((doc) =>
-              ActivitiesModel.fromJson(doc.data() as Map<String, dynamic>)).toList();
+      activitySnapshot.docs.map((doc) =>
+          ActivitiesModel.fromJson(doc.data() as Map<String, dynamic>)).toList();
       activityList.assignAll(retrivedActivity);
 
     } catch (e) {

@@ -1,9 +1,15 @@
+import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:smart_clean/constants/app_color.dart';
+import 'package:smart_clean/view/request/request_screen.dart';
 import 'package:smart_clean/view/screens/home/home_screen.dart';
 import 'package:smart_clean/view/screens/nav/nav_con.dart';
-import 'package:smart_clean/view/screens/profile/profile_screen.dart';
-import 'package:smart_clean/view/screens/setting_screen/setting_screen.dart';
+import 'package:smart_clean/view/screens/profile/profile_screen.dart';import 'package:smart_clean/view/screens/waste_collaction/waste_collection_status_screen.dart';
+import 'package:smart_clean/view/screens/waste_collaction/waste_verification_screen.dart';
 
 class NavigationScreen extends StatelessWidget {
   const NavigationScreen({super.key});
@@ -16,26 +22,24 @@ class NavigationScreen extends StatelessWidget {
     final pages = <Widget>[
       const HomeScreen(),
       ProfileScreen(),
-      const SettingScreen(),
     ];
 
     return Scaffold(
       bottomNavigationBar: Obx(() => NavigationBar(
+        backgroundColor: AppColor.appWhiteColor,
         onDestinationSelected: controller.changePage,
-        indicatorColor: Colors.amber,
+        height: 60,
+        animationDuration: Duration(seconds: 1),
+        indicatorColor: AppColor.appBarColor,
         selectedIndex: controller.currentPageIndex.value,
-        destinations: const <Widget>[
-          NavigationDestination(
+        destinations: <Widget>[
+          const NavigationDestination(
             selectedIcon: Icon(Icons.home),
             icon: Icon(Icons.home_outlined),
             label: 'Home',
           ),
-          NavigationDestination(
+          const NavigationDestination(
             icon: Icon(Icons.person_outline),
-            label: 'Profile',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
             label: 'Settings',
           ),
         ],

@@ -1,28 +1,32 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_clean/constants/app_color.dart';
 import 'package:smart_clean/view/screens/auth/auth_controller.dart';
+import 'package:smart_clean/view/screens/profile/profile_controller.dart';
 import 'package:smart_clean/view/screens/utils/custom_widgets.dart';
-class ResetAccount extends StatelessWidget {
-  const ResetAccount({super.key});
+class ResetAccountScreen extends StatelessWidget {
+  const ResetAccountScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    final String uid = FirebaseAuth.instance.currentUser!.uid;
+    double screenHeight = Get.height;
 
-    return GetBuilder<AuthController>(builder: (ctrl) {
+    return GetBuilder<ProfileController>(builder: (ctrl) {
       return Scaffold(
-        appBar: AppBar(title: Text('Reset'),),
+        appBar: AppBar(
+          backgroundColor: AppColor.appBarColor,
+
+          title: Text('Reset',style: TextStyle(color: AppColor.appWhiteColor,fontWeight: FontWeight.bold),),
+        leading: IconButton(onPressed: ()=> Get.back(),icon: Icon(Icons.arrow_back_ios,color: AppColor.appWhiteColor,) ,),
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
-              children: [
-                SizedBox(height: screenHeight * 0.03),
-                Image.asset('assets/images/admin_logo.png'),
-                Center(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [Center(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 20),
@@ -74,7 +78,7 @@ class ResetAccount extends StatelessWidget {
 
                         // Login Button
                         Form(
-                          key: ctrl.formKey,
+                          // key: ctrl.formKey,
                           child: SizedBox(
                             width: double.infinity,
                             child: Obx(() => ElevatedButton(
@@ -86,7 +90,7 @@ class ResetAccount extends StatelessWidget {
                                 elevation: 5,
                               ),
                               onPressed: () async {
-                                await ctrl.signUp(); // Wait for sign-up completion
+                                await ctrl.resetAccount(uid); // Wait for sign-up completion
 
                               },
                               child: ctrl.isLoading.value
@@ -109,34 +113,6 @@ class ResetAccount extends StatelessWidget {
                               ),
                             )),
                           ),),
-
-
-                        SizedBox(height: screenHeight * 0.02),
-
-                        // Already Have an Account? Sign Up
-                        GestureDetector(
-                          onTap: () {
-                            Get.toNamed("/login");
-                          },
-                          child: Text.rich(
-                            TextSpan(
-                              text: "Already have an account? ",
-                              style: TextStyle(
-                                  fontSize: 14, color: Colors.black),
-                              children: [
-
-                                TextSpan(
-                                  text: "Login",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: AppColor.numberHeighlightedColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),

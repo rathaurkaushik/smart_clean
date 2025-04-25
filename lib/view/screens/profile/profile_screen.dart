@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:smart_clean/constants/app_color.dart';
 import 'package:smart_clean/view/screens/profile/profile_controller.dart';
+import 'package:smart_clean/view/screens/profile/resetAccount.dart';
 import 'package:smart_clean/view/screens/utils/custom_widgets.dart';
 import 'package:smart_clean/view/screens/utils/first_letter.dart';
 class ProfileScreen extends StatelessWidget {
@@ -35,68 +37,50 @@ class ProfileScreen extends StatelessWidget {
           ),
           ),
         ),
+
       ),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: [
               // Profile Section
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    width: screenWidth,
-                    height: screenHeight * 0.20,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.blue.shade600, Colors.green.shade700],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          radius: 50,
-                          backgroundColor: Colors.white,
-                          child: Image.asset('assets/images/man.png'),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Cleanup Provider',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
-                    ),
+              Container(
+                width: screenWidth,
+                height: screenHeight * 0.20,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.blue.shade600, Colors.green.shade700],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                  Positioned(
-                    left: screenWidth * 0.05,
-                    right: screenWidth * 0.05,
-                    bottom: -30,
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            _buildStatColumn('156', 'Completed'),
-                            _buildStatColumn('4.9', 'Rating'),
-                            _buildStatColumn('98%', 'Success'),
-                          ],
-                        ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.white,
+                      child: Image.asset('assets/images/man.png'),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      ctrl.user.value!.name ?? "No Name",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold
                       ),
                     ),
-                  ),
-                ],
+                    Text(
+                      ctrl.user.value!.email ?? "No Name",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               SizedBox(height: 50),
@@ -112,7 +96,7 @@ class ProfileScreen extends StatelessWidget {
                         color: Colors.deepPurple,
                       ),
                       "Email",
-                      ctrl.user.value!.email.toString()),
+                      ctrl.user.value!.email ?? "Not Available"),
                   CustomWidgets().buildInfoRow(
                       Colors.yellow[200]!,
                       Icon(
@@ -120,7 +104,7 @@ class ProfileScreen extends StatelessWidget {
                         color: Colors.amberAccent,
                       ),
                       "Phone",
-                      ctrl.user.value!.number.toString()),
+                      ctrl.user.value!.phone ?? "Not Available"),
                 ],
               ),
 
@@ -141,18 +125,18 @@ class ProfileScreen extends StatelessWidget {
                       // toggle logic
                     },
                   ),
-                  CustomWidgets().buildNotificationCard(
-                    Colors.lightGreen[200]!,
-                    Icon(CupertinoIcons.mail, color: Colors.green),
-                    'Summary',
-                    'Daily summary and report',
-                    false,
-
-                    ///on toggle
-                    () {
-                      // toggle logic
-                    },
-                  ),
+                  // CustomWidgets().buildNotificationCard(
+                  //   Colors.lightGreen[200]!,
+                  //   Icon(CupertinoIcons.mail, color: Colors.green),
+                  //   'Summary',
+                  //   'Daily summary and report',
+                  //   false,
+                  //
+                  //   ///on toggle
+                  //   () {
+                  //     // toggle logic
+                  //   },
+                  // ),
                 ],
               ),
 
@@ -166,11 +150,13 @@ class ProfileScreen extends StatelessWidget {
                     Icon(CupertinoIcons.exclamationmark_circle,
                         color: Colors.red),
                     'FaQs and support ',
+                    true
                   ),
                   CustomWidgets().buildHelpSupportCard(
                     Colors.grey[200]!,
                     Icon(CupertinoIcons.question_circle, color: Colors.black),
                     'Version 1.0.0',
+                  false
                   ),
                 ],
               ),
@@ -185,7 +171,7 @@ class ProfileScreen extends StatelessWidget {
                   "Are you sure you want to reset your account? This cannot be undone.",
                   "Reset", () {
                 // reset account screen
-                Get.toNamed('/resetAccount');
+                Get.to(()=> ResetAccountScreen());
               }, () {}, textColor: Colors.black),
 
               // Logout Button

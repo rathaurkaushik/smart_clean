@@ -44,12 +44,19 @@ class ProfileController extends GetxController {
 
   Future<void> getUsersData(String uid) async {
     DocumentSnapshot usersSnapshot = await usersCollection!.doc(uid).get();
-    if (usersSnapshot.exists) {
-      user.value =
-          UsersModel.fromJson(usersSnapshot.data() as Map<String, dynamic>);
+    try {
+      if (usersSnapshot.exists) {
+        user.value =
+            UsersModel.fromJson(usersSnapshot.data() as Map<String, dynamic>);
+      } else {
+        print('User not found!');
+      }
+    }
+    catch(e){
+      Utils().toastMessageWarning(e.toString());
+    }
+    finally{
       update();
-    } else {
-      print('User not found!');
     }
   }
 

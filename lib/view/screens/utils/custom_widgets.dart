@@ -242,6 +242,7 @@ class CustomWidgets {
       Color iconBackgroundColor,
       Icon icon,
       String title,
+      bool nextPage
       ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -269,6 +270,7 @@ class CustomWidgets {
               ),
             ],
           ),
+          nextPage == true ?
           const Icon(
             CupertinoIcons.right_chevron,
             color: Colors.grey,
@@ -276,7 +278,7 @@ class CustomWidgets {
             shadows: [
               Shadow(color: Colors.grey,offset: Offset.infinite)
             ],
-          ),
+          ) : Spacer()
         ],
       ),
     );

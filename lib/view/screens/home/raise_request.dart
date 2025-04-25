@@ -122,7 +122,7 @@ class RaiseRequest extends StatelessWidget {
                   color: AppColor.appWhiteColor,
                   onTap: () {
                     ctrl.sendRequestData(
-                        imagePath, address.currentAddress.value);
+                        imagePath, address.currentAddress.value ?? "NO IMAGE pATH");
                   },
                 ),
                 SizedBox(height: 10),
