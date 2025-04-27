@@ -19,17 +19,14 @@ class HomeController extends GetxController {
   final List<ActivitiesModel> activityList = [];
 
   /// notification Services
-  ///
   NotificationServices notificationServices = NotificationServices();
-
-
 
   /// Stores user-selected address from LocationScreen
   String? selectedLocation;
-  var isLoading = false.obs;
+  var isLoading = false.obs; // Observable for loading state
+
   @override
   void onInit() {
-
     notificationServices.requestNotificationPermission();
     notificationServices.getToken().then((value){
       print("Device token value: ${value}");
@@ -40,15 +37,12 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
-
   /// Opens the camera and navigates to the RaiseRequest screen with captured image
   void openCamera() async {
     final image = await _picker.pickImage(source: ImageSource.camera);
     if (image != null) {
       final File imageFile = File(image.path);
-      Get.to(
-        () => RaiseRequest(imagePath: imageFile),
-      ); // ✅ pass File, not String
+      Get.to(() => RaiseRequest(imagePath: imageFile)); // Pass File, not String
       print('📸 Image path: ${image.path}');
     } else {
       print('❌ No image taken');
@@ -62,47 +56,39 @@ class HomeController extends GetxController {
     print('📍 Location updated: $location');
   }
 
-  ///
-  /// get user details
-  ///
+  /// Get user details
   Future<Map<String, String>> getUserInfo() async {
     final uid = _auth.currentUser!.uid;
-    final userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    final userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
     if (userDoc.exists) {
       final name = userDoc['name'];
-      print('Name: ${name}');
       final phone = userDoc['phone'];
-      print('phone ${phone}');
-
       return {"name": name, "phone": phone};
     } else {
       throw Exception("User not found");
     }
   }
 
-  ///
-  /// get image
-  ///
+  /// Upload image to Firebase Storage
   Future<String> uploadImage(File imageFile) async {
     final fileName = DateTime.now().millisecondsSinceEpoch.toString();
     final ref = storage.ref().child('photos/$fileName.jpg');
 
     await ref.putFile(imageFile);
     print("photo uploaded");
-    print("${ref.getDownloadURL}");
     return await ref.getDownloadURL();
   }
 
-  /// set data in firebase
+  /// Set data in Firebase
   Future<void> sendRequestData(File imageFile, address) async {
-    isLoading.value = true;
-    final userInfo = await getUserInfo(); // ← fetch name & phone number
-    final photoUrl = await uploadImage(imageFile);
-    print("move to ref");
+    isLoading.value = true; // Start loading
+    update(); // Update the UI when loading starts
 
+    final userInfo = await getUserInfo(); // Fetch name & phone number
+    final photoUrl = await uploadImage(imageFile);
     final requestRef = FirebaseFirestore.instance.collection('requests').doc();
+
     try {
       final requestData = {
         "id": requestRef.id,
@@ -115,41 +101,34 @@ class HomeController extends GetxController {
         "acceptedAt": "", // Initially blank
         "completedAt": "", // Initially blank
       };
-      print("hello");
+
       await requestRef.set(requestData);
       Utils().toastMessageSimple("Report Submitted");
-      isLoading.value = false;
-      Get.back();
     } catch (e) {
       print(e.toString());
       Utils().toastMessageWarning("Report not submitted");
-      isLoading.value = false;
+    } finally {
+      isLoading.value = false; // End loading
+      update(); // Update the UI when loading ends
     }
   }
 
-  /// Activities
-
+  /// Get activities from Firestore
   Future<void> getActivities() async {
     try {
       QuerySnapshot activitySnapshot = await activityRef.get();
-      print(("activity find: ${activitySnapshot.docs.length}"));
-
       final List<ActivitiesModel> retrivedActivity =
-          activitySnapshot.docs.map((doc) =>
-              ActivitiesModel.fromJson(doc.data() as Map<String, dynamic>)).toList();
+      activitySnapshot.docs.map((doc) => ActivitiesModel.fromJson(doc.data() as Map<String, dynamic>)).toList();
       activityList.assignAll(retrivedActivity);
-
     } catch (e) {
       Utils().toastMessageWarning('Stats not visible');
       print(e.toString());
-
-    }
-    finally{
+    } finally {
       update();
     }
   }
 
-  /// get time
+  /// Get time difference as text
   String getTimeDifferenceText(DateTime createdAt) {
     final now = DateTime.now();
     final difference = now.difference(createdAt);
@@ -162,7 +141,4 @@ class HomeController extends GetxController {
       return '${difference.inDays}d ago';
     }
   }
-
-
-
 }

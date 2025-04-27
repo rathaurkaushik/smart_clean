@@ -4,8 +4,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_clean/view/firebase_opt.dart';
-import 'package:smart_clean/view/request/request_controller.dart';
-import 'package:smart_clean/view/request/request_screen.dart';
 import 'package:smart_clean/view/screens/auth/auth_binding.dart';
 import 'package:smart_clean/view/screens/auth/login_screen.dart';
 import 'package:smart_clean/view/screens/auth/signup_screen.dart';
@@ -20,6 +18,7 @@ import 'package:smart_clean/view/screens/notificatin_screen/notification_screen.
 import 'package:smart_clean/view/screens/profile/profile_binding.dart';
 import 'package:smart_clean/view/screens/profile/profile_controller.dart';
 import 'package:smart_clean/view/screens/profile/profile_screen.dart';
+import 'package:smart_clean/view/screens/request/request_controller.dart';
 
 void main() async{
 WidgetsFlutterBinding.ensureInitialized();

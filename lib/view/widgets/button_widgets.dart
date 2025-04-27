@@ -8,16 +8,16 @@ class ButtonWidgets extends StatelessWidget {
   final Color? color;
   final VoidCallback? onTap;
 
+
   const ButtonWidgets({
     super.key,
     required this.title,
     this.icon,
     required this.backgroundColor,
     required this.color,
-   this.onTap
+   this.onTap,
 
   });
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;

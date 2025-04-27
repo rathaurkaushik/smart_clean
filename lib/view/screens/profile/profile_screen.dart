@@ -46,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
               // Profile Section
               Container(
                 width: screenWidth,
-                height: screenHeight * 0.20,
+                height: screenHeight * 0.25,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [Colors.blue.shade600, Colors.green.shade700],
@@ -110,35 +110,35 @@ class ProfileScreen extends StatelessWidget {
 
               /// Notification
               ///
-              CustomWidgets().buildCard(
-                title: "Notification",
-                children: [
-                  CustomWidgets().buildNotificationCard(
-                    Colors.lightBlue[200]!,
-                    Icon(CupertinoIcons.bell, color: Colors.blue),
-                    'Push Notification',
-                    'For new requests and updates',
-                    false,
-
-                    ///on toggle
-                    () {
-                      // toggle logic
-                    },
-                  ),
-                  // CustomWidgets().buildNotificationCard(
-                  //   Colors.lightGreen[200]!,
-                  //   Icon(CupertinoIcons.mail, color: Colors.green),
-                  //   'Summary',
-                  //   'Daily summary and report',
-                  //   false,
-                  //
-                  //   ///on toggle
-                  //   () {
-                  //     // toggle logic
-                  //   },
-                  // ),
-                ],
-              ),
+              // CustomWidgets().buildCard(
+              //   title: "Notification",
+              //   children: [
+              //     CustomWidgets().buildNotificationCard(
+              //       Colors.lightBlue[200]!,
+              //       Icon(CupertinoIcons.bell, color: Colors.blue),
+              //       'Push Notification',
+              //       'For new requests and updates',
+              //       false,
+              //
+              //       ///on toggle
+              //       () {
+              //         // toggle logic
+              //       },
+              //     ),
+              //     // CustomWidgets().buildNotificationCard(
+              //     //   Colors.lightGreen[200]!,
+              //     //   Icon(CupertinoIcons.mail, color: Colors.green),
+              //     //   'Summary',
+              //     //   'Daily summary and report',
+              //     //   false,
+              //     //
+              //     //   ///on toggle
+              //     //   () {
+              //     //     // toggle logic
+              //     //   },
+              //     // ),
+              //   ],
+              // ),
 
               ///  Help and Support
               ///

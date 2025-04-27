@@ -17,14 +17,8 @@ class RaiseRequest extends StatelessWidget {
   Widget build(BuildContext context) {
     final address = Get.put(LocationController());
 
-    double screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return GetBuilder<HomeController>(builder: (ctrl) {
       return Scaffold(
@@ -37,9 +31,13 @@ class RaiseRequest extends StatelessWidget {
                 color: AppColor.appWhiteColor,
               ),
             ),
-            leading: IconButton(onPressed: () => Get.back(),
+            leading: IconButton(
+                onPressed: () => Get.back(),
                 icon: Icon(
-                  Icons.arrow_back_ios_new, color: AppColor.appWhiteColor,))
+                  Icons.arrow_back_ios_new,
+                  color: AppColor.appWhiteColor,
+                )
+            )
         ),
         body: Center(
           child: Padding(
@@ -47,7 +45,7 @@ class RaiseRequest extends StatelessWidget {
             child: Column(
               children: [
 
-                ///image
+                /// Image
                 Container(
                   width: double.infinity,
                   height: 300,
@@ -62,7 +60,7 @@ class RaiseRequest extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
 
-                /// location button
+                /// Location button
                 ButtonWidgets(
                   title: 'Location Tracker',
                   backgroundColor: AppColor.userLocation,
@@ -71,14 +69,12 @@ class RaiseRequest extends StatelessWidget {
                   onTap: () async {
                     String? result = await Get.to(() => LocationScreen());
                     if (result != null) {
-                      ctrl.updateSelectedLocation(
-                          result); // ✅ Use this instead of direct assignment
+                      ctrl.updateSelectedLocation(result); // ✅ Use this instead of direct assignment
                     }
                   },
-
                 ),
 
-                /// show selected Location
+                /// Show selected Location
                 if (ctrl.selectedLocation != null) ...[
                   const SizedBox(height: 10),
                   Padding(
@@ -113,20 +109,43 @@ class RaiseRequest extends StatelessWidget {
                     ),
                   ),
                 ],
-                SizedBox(height: 10,),
-
-                /// submit button
-                ButtonWidgets(
-                  title: 'Confirm & Submit Report',
-                  backgroundColor: AppColor.appBarColor,
-                  color: AppColor.appWhiteColor,
-                  onTap: () {
-                    ctrl.sendRequestData(
-                        imagePath, address.currentAddress.value ?? "NO IMAGE pATH");
-                  },
-                ),
                 SizedBox(height: 10),
 
+                /// Submit button with loading spinner
+                Obx(() {
+                  return Stack(
+                    children: [
+                      ButtonWidgets(
+                        title: ctrl.isLoading.value
+                            ? 'Submitting...'  // Change text while loading
+                            : 'Confirm & Submit Report',
+                        backgroundColor: AppColor.appBarColor,
+                        color: AppColor.appWhiteColor,
+                        onTap: ctrl.isLoading.value
+                            ? null  // Disable button while loading
+                            : () {
+                          ctrl.sendRequestData(
+                              imagePath,
+                              address.currentAddress.value ?? "NO IMAGE PATH"
+                          );
+                        },
+                      ),
+                      if (ctrl.isLoading.value)
+                        Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(AppColor.appWhiteColor),
+                            ),
+                          ),
+                        ),
+                    ],
+                  );
+                }),
+
+                SizedBox(height: 10),
+
+                /// Retake Photo button
                 ButtonWidgets(
                   title: 'Retake Photo',
                   backgroundColor: AppColor.appWhiteColor,

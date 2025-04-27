@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_clean/model/request.dart';
-import 'package:smart_clean/view/request/request_controller.dart';
+import 'package:smart_clean/view/screens/request/request_controller.dart';
 
 class DetailReqScreen extends StatelessWidget {
 final RequestModel request;

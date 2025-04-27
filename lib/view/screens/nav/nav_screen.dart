@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:smart_clean/constants/app_color.dart';
-import 'package:smart_clean/view/request/request_screen.dart';
+import 'package:smart_clean/view/screens/request/request_screen.dart';
 import 'package:smart_clean/view/screens/home/home_screen.dart';
 import 'package:smart_clean/view/screens/nav/nav_con.dart';
 import 'package:smart_clean/view/screens/profile/profile_screen.dart';import 'package:smart_clean/view/screens/waste_collaction/waste_collection_status_screen.dart';

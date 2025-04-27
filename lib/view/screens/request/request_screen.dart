@@ -16,8 +16,7 @@ class CollectionProgress extends StatelessWidget {
     required this.currentStatus,
   });
 
-  @override
-  Widget build(BuildContext context) {
+  @override Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.appBarColor,

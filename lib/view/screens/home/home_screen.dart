@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:smart_clean/view/request/request_screen.dart';
+import 'package:smart_clean/view/screens/request/request_screen.dart';
 import 'package:smart_clean/view/screens/home/home_controller.dart';
 import 'package:smart_clean/view/widgets/main_container/container_widget.dart';
 
